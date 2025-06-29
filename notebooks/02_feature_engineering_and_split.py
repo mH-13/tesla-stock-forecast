@@ -1,6 +1,4 @@
 """Visualization, Feature Engineering, and Train/Test Split
-
-Covers:
 - Seasonality & rolling-statistics plots
 - Creation of technical features:
     • Moving averages
@@ -16,15 +14,14 @@ import seaborn as sns
 
 # 1. Reload cleaned data from previous step
 df = pd.read_csv('data/processed/tesla_cleaned.csv',
-                parse_dates=['Date'], index_col='Date')  # assume you saved cleaned CSV
+                parse_dates=['Date'], index_col='Date') 
 
 # 2. Seasonality & Rolling Statistics
 def plot_rolling_stats(data, window=30):
-    """
-    Plot original series along with rolling mean and std.
-    """
+    
     rol_mean = data['Close'].rolling(window=window).mean()
     rol_std  = data['Close'].rolling(window=window).std()
+    
     
     plt.figure(figsize=(12, 4))
     plt.plot(data.index, data['Close'], label='Close')
@@ -33,6 +30,7 @@ def plot_rolling_stats(data, window=30):
     plt.title(f'Rolling Mean & Std (window={window})')
     plt.legend()
     plt.show()
+    
 
 plot_rolling_stats(df, window=30)
 plot_rolling_stats(df, window=90)
@@ -42,8 +40,8 @@ plot_rolling_stats(df, window=90)
 
 # 3. Feature Engineering
 def add_technical_indicators(data):
-    """
-    Adds technical features:
+    
+    """Adding  technical features:
     - MA5, MA10, MA20
     - Volatility (std over 5/10/20 days)
     - Daily % returns
